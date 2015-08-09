@@ -17,5 +17,5 @@ In Summer 2014, I interned at Google's Feedback team in Mountain View, and in Su
 *   [League of Legends Ban Helper](https://lolbanhelper.appspot.com/)
 
 ## Links
-*   [LinkedIn](https://www.linkedin.com)
+*   [LinkedIn](https://www.linkedin.com/in/austinhle)
 *   [GitHub](https://github.com/austinhle)
