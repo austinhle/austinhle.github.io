@@ -4,6 +4,8 @@ layout: page
 
 # Austin Le - Student, teacher, software engineer, gamer.
 
+<img src="https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/v/t1.0-9/10442546_696660630417132_7466810421954999452_n.jpg?oh=3e71857eb771d529132ffc7fe1b77f5d&oe=56837A5C" height="300" width="300">
+
 ## Biography
 My name is Austin Le, and I am an upcoming 3rd year undergraduate student at UC Berkeley studying Electrical Engineering & Computer Science (EECS).
 
