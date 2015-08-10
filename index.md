@@ -11,7 +11,7 @@ My name is Austin Le, and I am an upcoming 3rd year undergraduate student at UC 
 
 I enjoy learning, teaching, creating new things, and playing video games. On campus, I am an active officer of [Eta Kappa Nu](https://hkn.eecs.berkeley.edu/), the EECS Honor Society, an undergraduate student instructor for [CS 61A](http://cs61a.org), and one of two head facilitators/instructors of the [League of Legends DeCal](http://www.decal.org/courses/lol).
 
-In my free time, I've recently gotten into developing my personal side projects (see below) and web development. I am also very passionate about online multiplayer video games and greatly enjoy what they have to offer: immersive worlds, challenging experiences, and team-oriented strategy and gameplay. I play a large variety of games, but currently mostly play [League of Legends](http://na.leagueoflegends.com/) and [Guild Wars 2](https://www.guildwars2.com/en/).
+Outside of school, I've recently gotten into developing my personal website and side projects, having been inspired by my work and co-workers this summer. I am also very passionate about online multiplayer video games and greatly enjoy what they have to offer: immersive worlds, challenging experiences, and team-oriented strategy and gameplay. I play a large variety of games, but currently mostly play [League of Legends](http://na.leagueoflegends.com/) and [Guild Wars 2](https://www.guildwars2.com/en/). I have a soft spot for the MMORPG genre.
 
 In Summer 2014, I interned at Google's Feedback team in Mountain View, and in Summer 2015, I returned to intern at Google's App Engine Admin API (part of Google Cloud Platform) team in Seattle.
 
@@ -21,3 +21,6 @@ In Summer 2014, I interned at Google's Feedback team in Mountain View, and in Su
 ## Links
 *   [LinkedIn](https://www.linkedin.com/in/austinhle)
 *   [GitHub](https://github.com/austinhle)
+
+## Resume
+<iframe src="https://github.com/austinhle/austinhle.github.io/files/Resume-AustinLe.pdf&embedded=true" style="width:800px; height:1100px;" frameborder="0"></iframe>
