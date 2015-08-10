@@ -4,34 +4,36 @@ layout: page
 <!-- Simple header with scrollable tabs. -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">Austin Le</span>
+  	
+  	<!-- Tabs -->
+  	<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+  	  <button class="mdl-button mdl-js-button" disabled style="width: 200px; height: 50px; font-size: 150%; padding: 10px; color: #000000">Austin Le</button>
+      <a href="#scroll-tab-1" class="mdl-layout__tab is-active">About</a>
+      <a href="#scroll-tab-2" class="mdl-layout__tab">Projects</a>
+      <a href="#scroll-tab-3" class="mdl-layout__tab">Skills</a>
+      <a href="#scroll-tab-4" class="mdl-layout__tab">Contact Me</a>
+
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
+
       <!-- Navigation -->
-      <nav class="mdl-navigation">
+      <nav class="mdl-navigation" style="padding: 10px">
         <a class="mdl-navigation__link" href="https://www.linkedin.com/in/austinhle" target="_blank">
         	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">LinkedIn</button>
         </a>
+      </nav>
+      <nav class="mdl-navigation" style="padding: 10px">
         <a class="mdl-navigation__link" href="https://github.com/austinhle" target="_blank">
         	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">GitHub</button>
         </a>
+      </nav>
+      <nav class="mdl-navigation" style="padding: 10px">
         <a class="mdl-navigation__link" href="files/Resume-AustinLe.pdf" target="_blank">
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Resume</button>
 		</a>
       </nav>
     </div>
-    <!-- Tabs -->
-    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-      <a href="#scroll-tab-1" class="mdl-layout__tab is-active">About</a>
-      <a href="#scroll-tab-2" class="mdl-layout__tab">Projects</a>
-      <a href="#scroll-tab-3" class="mdl-layout__tab">Skills</a>
-    </div>
   </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Austin Le</span>
-  </div>
   <main class="mdl-layout__content">
     <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
       <div class="page-content">
@@ -54,14 +56,12 @@ layout: page
     </section>
     <section class="mdl-layout__tab-panel" id="scroll-tab-2">
       <div class="page-content">
-      	{% include header.html %}
       	<h3>Projects</h3>
 		<p><a href="https://lolbanhelper.appspot.com/" target="_blank" class="link">League of Legends Ban Helper</a></p>
       </div>
     </section>
     <section class="mdl-layout__tab-panel" id="scroll-tab-3">
       <div class="page-content">
-      	{% include header.html %}
       	<h3>Skills</h3>
 		<h4>Proficient</h4>
 		<ul>
@@ -90,6 +90,11 @@ layout: page
 			<li><a href="http://jekyllrb.com/docs/home/" target="_blank" class="link">Jekyll</a></li>
 		</ul>
       </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="scroll-tab-4">
+    	<div class="page-content">
+      	<h3>Contact Me</h3>
+      	</div>
     </section>
   </main>
 </div>
