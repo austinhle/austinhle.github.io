@@ -23,4 +23,8 @@ In Summer 2014, I interned at Google's Feedback team in Mountain View, and in Su
 *   [GitHub](https://github.com/austinhle)
 
 ## Resume
-<iframe src="https://github.com/austinhle/austinhle.github.io/files/Resume-AustinLe.pdf&embedded=true" style="width:800px; height:1100px;" frameborder="0"></iframe>
+<object data="files/Resume-AustinLe.pdf" type="application/pdf" width="100%" height="100%">
+  <p>It appears you don't have a PDF plugin for this browser.
+  No biggie... you can <a href="files/Resume-AustinLe.pdf">click here to
+  download the PDF file.</a></p>
+</object>
