@@ -33,8 +33,23 @@ layout: page
 <ul>
 	<li>Java</li>
 	<li>C</li>
+	<li>Git</li>
+	<li>Unix</li>
+	<li>Scheme</li>
+	<li>SQLite</li>
+	<li>HTML</li>
+	<li>CSS</li>
+	<li>JavaScript</li>
 </ul>
 <h3>Other</h3>
+<ul>
+	<li>MIPS</li>
+	<li>MATLAB</li>
+	<li>MapReduce</li>
+	<li>Markdown</li>
+	<li><a href="https://cloud.google.com/appengine/docs" target="_blank" class="link">Google App Engine</a></li>
+	<li><a href="http://jekyllrb.com/docs/home/" target="_blank" class="link">Jekyll</a></li>
+</ul>
 
 <h2>Links</h2>
 <p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFWv5GGlGD36t-cjXx3EMOH0qf9XAVmYbltGCGMaOH1UIdxlfW" width="20" height="20"> <a href="https://www.linkedin.com/in/austinhle" target="_blank" class="link">LinkedIn</a></p>
