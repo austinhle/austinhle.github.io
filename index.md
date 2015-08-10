@@ -23,7 +23,8 @@ In Summer 2014, I interned at Google's Feedback team in Mountain View, and in Su
 *   [GitHub](https://github.com/austinhle)
 
 ## Resume
-<object data="files/Resume-AustinLe.pdf" type="application/pdf" width="100%" height="100%">
+Download my resume in PDF format <a href="files/Resume-AustinLe.pdf" download>here</a>.
+<object data="files/Resume-AustinLe.pdf" type="application/pdf" width="800px" height="1100px">
   <p>It appears you don't have a PDF plugin for this browser.
   No biggie... you can <a href="files/Resume-AustinLe.pdf">click here to
   download the PDF file.</a></p>
