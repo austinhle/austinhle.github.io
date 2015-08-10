@@ -2,7 +2,8 @@
 layout: page
 ---
 
-# Austin Le - Student, teacher, software engineer, gamer.
+<h1 style="font-family: Segoe UI; font-size: 400%">Austin Le</h1>
+<h3 style="font-family: Century Gothic; font-size: 175%">Student, teacher, software engineer, gamer.</h3>
 
 <img src="https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/v/t1.0-9/10442546_696660630417132_7466810421954999452_n.jpg?oh=3e71857eb771d529132ffc7fe1b77f5d&oe=56837A5C" height="300" width="300">
 
@@ -18,16 +19,17 @@ Outside of school, I've recently gotten into developing my personal website and 
 In Summer 2014, I interned at Google's Feedback team in Mountain View, and in Summer 2015, I returned to intern at Google's App Engine Admin API (part of Google Cloud Platform) team in Seattle.
 
 ## Projects
-*   [League of Legends Ban Helper](https://lolbanhelper.appspot.com/)
+[League of Legends Ban Helper](https://lolbanhelper.appspot.com/)
 
 ## Links
-*   [LinkedIn](https://www.linkedin.com/in/austinhle)
-*   [GitHub](https://github.com/austinhle)
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFWv5GGlGD36t-cjXx3EMOH0qf9XAVmYbltGCGMaOH1UIdxlfW" width="20" height="20"> [LinkedIn](https://www.linkedin.com/in/austinhle)
+
+<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTOug7V-atE3pm_qacE141jGo9_SPQQ_SZyVBx2GEZ5dul2LTVIMK91oA" width="20" height="20"> [GitHub](https://github.com/austinhle)
 
 ## Resume
 Download my resume in PDF format <a href="files/Resume-AustinLe.pdf" download>here</a>.
 <object data="files/Resume-AustinLe.pdf" type="application/pdf" width="800px" height="1100px">
   <p>It appears you don't have a PDF plugin for this browser.
-  No biggie... you can <a href="files/Resume-AustinLe.pdf">click here to
-  download the PDF file.</a></p>
+  You can <a href="files/Resume-AustinLe.pdf">click here to
+  download my resume instead.</a></p>
 </object>
