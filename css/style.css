@@ -1,14 +1,10 @@
-.content {
+.page-content {
 	text-align: left;
-	width: 800px;
-	background-color: #666666;
-	border: 10px solid #999999;
-	border-radius: 30px;
 	color: #FFFFFF;
 	font-family: 'Roboto', sans-serif;
-	font-size: 115%;
-	margin: auto;
-	padding: 30px;
+	padding: 100px;
+	width: 1000px;
+	margin: auto
 }
 
 a.link:link, a.link:visited {
