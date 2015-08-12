@@ -16,3 +16,40 @@ a.link:hover, a.link:active {
 	color: #FFD119;
 	text-decoration: underline;
 }
+
+.about {
+	font-size: 75%;
+	font-weight: 300;
+}
+
+.project {
+	font-weight: 700;
+}
+
+.proficient, .familiar, .other {
+	font-size: 125%;
+	font-weight: 500;
+}
+.proficient {
+	color: rgb(76, 175, 80);
+}
+.familiar {
+	color: rgb(255, 235, 59);
+}
+.other {
+	color: rgb(255, 152, 0);
+}
+
+.demo-card-wide.mdl-card {
+	width: 700px;
+	height: 225px;
+}
+.demo-card-wide > .mdl-card__title {
+	height: 65px;
+}
+.demo-card-wide > .mdl-card__actions {
+	height: 30px;
+}
+.mdl-card__supporting-text {
+	font-weight: 500;
+}

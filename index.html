@@ -7,11 +7,10 @@ layout: page
   	
   	<!-- Tabs -->
   	<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-  	  <button class="mdl-button mdl-js-button" disabled style="width: 200px; height: 50px; font-size: 150%; padding: 10px; color: #000000">Austin Le</button>
+  	  <button class="mdl-button mdl-js-button" disabled style="width: 200px; height: 50px; font-size: 150%; padding: 10px; color: #000000; font-weight: 700;">Austin Le</button>
       <a href="#scroll-tab-1" class="mdl-layout__tab is-active">About</a>
       <a href="#scroll-tab-2" class="mdl-layout__tab">Projects</a>
       <a href="#scroll-tab-3" class="mdl-layout__tab">Skills</a>
-      <a href="#scroll-tab-4" class="mdl-layout__tab">Contact Me</a>
 
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
@@ -38,40 +37,51 @@ layout: page
     <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
       <div class="page-content">
       	{% include header.html %}
-		<h3>A little about me</h3>
+		<h3 style="font-weight: 500">A little about me</h3>
 		<div style="font-size: 200%">
-			<p>My name is Austin Le, and I am an upcoming 3rd year undergraduate student at UC Berkeley studying Electrical Engineering & Computer Science (EECS).</p>
+			<p class="about">My name is Austin Le, and I am an upcoming 3rd year undergraduate student at UC Berkeley studying Electrical Engineering & Computer Science (EECS).</p>
 
-			<p>I love learning, teaching, creating new things, and playing video games.</p>
+			<p class="about">I love learning, teaching, creating new things, and playing video games.</p>
 
-			<p>On campus, I am an active officer of <a href="https://hkn.eecs.berkeley.edu/" target="_blank" class="link">Eta Kappa Nu, Mu chapter</a> (the EECS Honor Society), an undergraduate student instructor for <a href="http://cs61a.org" target="_blank" class="link">CS 61A</a>, and a head facilitator & instructor of the <a href="http://www.decal.org/courses/lol" target="_blank" class="link">Analytical Thinking in League of Legends DeCal</a>.</p>
+			<p class="about">On campus, I am an active officer of <a href="https://hkn.eecs.berkeley.edu/" target="_blank" class="link">Eta Kappa Nu, Mu chapter</a> (the EECS Honor Society), an undergraduate student instructor for <a href="http://cs61a.org" target="_blank" class="link">CS 61A</a>, and a head facilitator & instructor of the <a href="http://www.decal.org/courses/lol" target="_blank" class="link">Analytical Thinking in League of Legends DeCal</a>.</p>
 
-			<p>In an academic setting, I enjoy studying both the theoretical and practical sides of computer science. However, my main interests lie in the applications of computer science, creating interesting and useful tools for everyday users. I recently completed a course on Operating Systems and Systems Programming and did an internship in the area of distributed systems (Google Cloud Platform), which I've found to be a very interesting and practical use of computer science. On the more theoretical end, I am fascinated by the recent developments in artificial intelligence and machine learning, which have enabled awesome technology like the new Google Photos and Google Translate apps. I've also recently completed courses on AI and ML and hope to take further classes in this field in the next few semesters.</p>
+			<p class="about">In an academic setting, I enjoy studying both the theoretical and practical sides of computer science. However, my main interests lie in the applications of computer science, creating interesting and useful tools for everyday users. I recently completed a course on Operating Systems and Systems Programming and did an internship in the area of distributed systems (Google Cloud Platform), which I've found to be a very interesting and practical use of computer science. On the more theoretical end, I am fascinated by the recent developments in artificial intelligence and machine learning, which have enabled awesome technology like the new Google Photos and Google Translate apps. I've also recently completed courses on AI and ML and hope to take further classes in this field in the next few semesters.</p>
 
-			<p>Outside of school, I've recently gotten into developing my personal website and side projects, having been inspired by my work and co-workers this summer. I am also very passionate about online multiplayer video games and greatly enjoy what they have to offer: immersive worlds, challenging experiences, and team-oriented, strategic gameplay. I play a large variety of games, but currently mostly play <a href="http://na.leagueoflegends.com/" target="_blank" class="link">League of Legends</a> and <a href="https://www.guildwars2.com/en/" target="_blank" class="link">Guild Wars 2</a>. In particular, I have a weak spot for the MMORPG genre.</p>
+			<p class="about">Outside of school, I've recently gotten into developing my personal website and side projects, having been inspired by my work and co-workers this summer. I am also very passionate about online multiplayer video games and greatly enjoy what they have to offer: immersive worlds, challenging experiences, and team-oriented, strategic gameplay. I play a large variety of games, but currently mostly play <a href="http://na.leagueoflegends.com/" target="_blank" class="link">League of Legends</a> and <a href="https://www.guildwars2.com/en/" target="_blank" class="link">Guild Wars 2</a>. I have a particularly weak spot for the MMORPG genre.</p>
 
-			<p>In Summer 2014, I interned at Google's Mountain View office on the Feedback team, and in Summer 2015, I returned to work at Google's Seattle office on the App Engine Admin API team (part of Google Cloud Platform).</p>
+			<p class="about">In Summer 2014, I interned at Google's Mountain View office on the Feedback team, and in Summer 2015, I returned to work at Google's Seattle office on the App Engine Admin API team (part of Google Cloud Platform).</p>
 		</div>
       </div>
     </section>
     <section class="mdl-layout__tab-panel" id="scroll-tab-2">
       <div class="page-content">
-      	<h3>Projects</h3>
-		<a class="mdl-navigation__link" href="https://lolbanhelper.appspot.com/" target="_blank">
-			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary">League of Legends Ban Helper</button>
-		</a>
+      	<h3 style="font-weight: 500">Projects</h3>
+      	<!-- Wide card -->
+		<div class="mdl-card mdl-shadow--2dp demo-card-wide project" style="background: rgb(255, 193, 7)">
+		  <div class="mdl-card__title" style="color: rgb(63, 81, 181)">
+		    <h2 class="mdl-card__title-text" style="font-weight: 400">League of Legends Ban Helper</h2>
+		  </div>
+		  <div class="mdl-card__supporting-text">
+		    This Google App Engine web application uses the Riot Games API for League of Legends and is written mainly in Golang. Users can look up a group of players to see statistics and get suggestions for bans when playing against those specific players. The application is intended for use in competitive playing environments.
+		  </div>
+		  <div class="mdl-card__actions mdl-card--border">
+		    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="https://lolbanhelper.appspot.com/" target="_blank" style="color: rgb(63, 81, 181)">
+		      Try it yourself!
+		    </a>
+		  </div>
+		</div>
       </div>
     </section>
     <section class="mdl-layout__tab-panel" id="scroll-tab-3">
       <div class="page-content">
-      	<h3>Skills</h3>
+      	<h3 style="font-weight: 500">Skills</h3>
 		<h4>Proficient</h4>
-		<ul style="font-size: 125%">
+		<ul class="proficient">
 			<li>Python</li>
 			<li>Golang</li>
 		</ul>
 		<h4>Familiar</h4>
-		<ul style="font-size: 125%">
+		<ul class="familiar">
 			<li>Java</li>
 			<li>C</li>
 			<li>Git</li>
@@ -83,20 +93,15 @@ layout: page
 			<li>JavaScript</li>
 		</ul>
 		<h4>Other</h4>
-		<ul style="font-size: 125%">
+		<ul class="other">
 			<li>MIPS</li>	
 			<li>MATLAB</li>
 			<li>MapReduce</li>
 			<li>Markdown</li>
-			<li><a href="https://cloud.google.com/appengine/docs" target="_blank" class="link">Google App Engine</a></li>
-			<li><a href="http://jekyllrb.com/docs/home/" target="_blank" class="link">Jekyll</a></li>
+			<li>Google App Engine</li>
+			<li>Jekyll</li>
 		</ul>
       </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-4">
-    	<div class="page-content">
-      	<h3>Contact Me</h3>
-      	</div>
     </section>
   </main>
 </div>
