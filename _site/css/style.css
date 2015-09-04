@@ -28,7 +28,7 @@ a.link:hover, a.link:active {
 
 .proficient, .familiar, .other {
 	font-size: 125%;
-	font-weight: 500;
+	font-weight: 400;
 }
 .proficient {
 	color: rgb(76, 175, 80);
