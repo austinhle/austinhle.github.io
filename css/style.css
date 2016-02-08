@@ -26,6 +26,11 @@ a.link:hover, a.link:active {
 	font-weight: 700;
 }
 
+.61b {
+        font-size: 125%;
+        font-weight: 300;
+}
+
 .proficient, .familiar, .other {
 	font-size: 125%;
 	font-weight: 400;
