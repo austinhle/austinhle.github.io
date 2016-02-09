@@ -1,26 +1,17 @@
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.amber-indigo.min.css">
-<script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<title>Austin Le</title>
-</head>
-<body style="background-color: #0D47A1">
-	<!-- Simple header with scrollable tabs. -->
+---
+layout: page
+---
+<!-- Simple header with scrollable tabs. -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
 
   	<!-- Tabs -->
   	<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
   	  <button class="mdl-button mdl-js-button" disabled style="width: 200px; height: 50px; font-size: 150%; padding: 10px; color: #000000; font-weight: 700;">Austin Le</button>
-      <a href="#scroll-tab-1" class="mdl-layout__tab is-active">About</a>
+      <a href="#scroll-tab-1" class="mdl-layout__tab">About</a>
       <a href="#scroll-tab-2" class="mdl-layout__tab">Projects</a>
       <a href="#scroll-tab-3" class="mdl-layout__tab">Skills</a>
-      <a href="#scroll-tab-4" class="mdl-layout__tab">CS 61B</a>
+      <a href="#scroll-tab-4" class="mdl-layout__tab is-active">CS 61B</a>
 
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
@@ -44,13 +35,9 @@
     </div>
   </header>
   <main class="mdl-layout__content">
-    <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+    <section class="mdl-layout__tab-panel" id="scroll-tab-1">
       <div class="page-content">
-      	<h1 style="font-size: 400%; font-weight: 700; text-align: center">Hi, I'm Austin.</h1>
-<h3 style="font-size: 200%; font-weight: 500; text-align: center">I'm a student, teacher, software engineer, and gamer.</h3>
-
-<div style="text-align: center"><img src="https://scontent-lax3-1.xx.fbcdn.net/hphotos-prn2/v/t1.0-9/10442546_696660630417132_7466810421954999452_n.jpg?oh=30b113483506ceed29c33a3e794e61ab&oe=57493B5C" height="300" width="300"></div>
-
+      	{% include header.html %}
 		<h3 style="font-weight: 500">A little about me</h3>
 		<div style="font-size: 175%">
 			<p class="about">My name is Austin Le, and I am a 3rd year undergraduate student at UC Berkeley pursuing a B.S. in Electrical Engineering & Computer Science (EECS).</p>
@@ -118,7 +105,7 @@
 		</ul>
       </div>
     </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-4">
+    <section class="mdl-layout__tab-panel is-active" id="scroll-tab-4">
         <div class="page-content">
             <h3 style="font-weight: 500">CS 61B: Data Structures</h3>
             <p class="61b">
@@ -136,6 +123,3 @@
     </section>
   </main>
 </div>
-
-</body>
-</html>
