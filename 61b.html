@@ -18,6 +18,11 @@ layout: page
 
       <!-- Navigation -->
       <nav class="mdl-navigation" style="padding: 10px">
+        <a class="mdl-navigation__link" href="/cs184" target="_blank">
+        	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">CS 184</button>
+        </a>
+      </nav>
+      <nav class="mdl-navigation" style="padding: 10px">
         <a class="mdl-navigation__link" href="https://www.linkedin.com/in/austinhle" target="_blank">
         	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">LinkedIn</button>
         </a>
@@ -107,18 +112,7 @@ layout: page
     </section>
     <section class="mdl-layout__tab-panel is-active" id="scroll-tab-4">
         <div class="page-content">
-            <h3 style="font-weight: 500">CS 61B: Data Structures</h3>
-            <p class="61b">
-                <h4>UNIX Tips of Week:</h4>
-                <ul>
-                    <li>Discussion 3: Tab auto-completion (no link at the moment)</li>
-                    <li>Discussion 4: <a href="https://en.wikipedia.org/wiki/Less_(Unix)" class="link">less</a></li>
-                </ul>
-                <h4>Discussion Materials:</h4>
-                <ul>
-                    <li>Discussion 4 (Inheritance): <a href="files/cs61b-disc4-inheritance.pdf" class="link">Slides</a></li>
-                <ul>
-            </p>
+            {% include 61b-content.html %}
         </div>
     </section>
   </main>
