@@ -1,10 +1,14 @@
 .page-content {
 	text-align: left;
-	color: #FAFAFA;
+	color: #BDBDBD;
 	font-family: 'Open Sans', 'Roboto', sans-serif;
 	padding: 100px;
 	width: 1000px;
 	margin: auto
+}
+
+.page {
+	background-color: #424242;
 }
 
 a.link:link, a.link:visited {
@@ -27,8 +31,8 @@ a.link:hover, a.link:active {
 }
 
 .61b {
-        font-size: 125%;
-        font-weight: 300;
+  font-size: 125%;
+  font-weight: 300;
 }
 
 .proficient, .familiar, .other {
