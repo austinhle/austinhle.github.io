@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+    div.padded {
+      padding-top: 0px;
+      padding-right: 100px;
+      padding-bottom: 0.25in;
+      padding-left: 100px;
+    }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #212121;
+    }
+  </style>
+<title>Austin Le |  CS 184</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<br>
+<h1 align="middle">CS 184: Computer Graphics and Imaging</h1>
+  <h1 align="middle">Assignment 2: GeoMenagerie</h1>
+    <h2 align="middle">Austin Le</h2>
+
+    <br><br>
+
+    <div class="padded">
+
+    <h2 align="middle">Overview</h2>
+      <h3>Short summary</h3>
+      <p>In this assignment, I implemented basic tessellation of Bezier surfaces in order to create and render editable meshes. Then, I implemented edge flipping and edge splitting within halfedge meshes to be used in loop subdivision for mesh upsampling. In addition, I also implemented the computation of area-averaged vertex normals in halfedge meshes to be used in conjunction with my implementation of Phong and environment map reflection shading for improved and smooth shading results.</p>
+
+      <h3>Longer summary (with more details!)</h3>
+      <p>In Part 1, I used the matrix form of Bezier patch evaluation to evaluate 3D points upon which I tessellated triangles and added them to the mesh. In Part 2, I got more familiar with the halfedge data structure used to traverse and represent halfedge meshes as used in this assignment by computing area-averaged normals for vertices in the mesh. These are then used in shading to produce smoother images. In Part 3 and 4, I implemented the edge flip and edge split functionalities of halfedge meshes, which are fundamental halfedge mesh operations that enable Part 5 to function properly. In Part 5, I used the flip and split operations to perform mesh upsampling through loop subdivision, which allows meshes to become smoother and enable improved shading and texturing. Lastly, in Part 6, I used the shading language GLSL to implement Phong shading, which incorporates ambient shading, diffuse shading, and specular shading and performs interpolation to produce smooth approximations of how an object should be shaded under some lighting conditions. In addition to Phong shading, I implemented environment map reflection shading, which employs some simple calculations from the field of optics to make a surface appear to reflect some surrounding environment, which is stored in a GLSL texture map.</p>
+
+      <p>After implementing the above features, I created my own mesh using the free program Blender. In this assignment, I learned the basics of Blender and created a mesh-man with several limbs and a head, as well as shoes on his feet! I exported the resulting mesh into a .dae file which I then fed into my program in order to perform upsampling as well as shading and observed the pretty awesome results of the features I implemented being done on a mesh I created from scratch. Images of my own creation in various states can be found in Part 7 below.</p>
+
+    <h2 align="middle">Part 1: Fun with Bezier Surfaces</h2>
+      <p>In Part 1, I implemented tessellation of Bezier surfaces into triangles that can then rasterized to the screen and then interacted with via the meshedit program. Since Bezier surfaces in this case were represented by 16 control points and tessellated uniformly on an 8x8 grid in parameter space (u and v parameters on a Bezier curve), we required 8x8x2 = 128 triangles (2 triangles to represent each square in the 8x8 grid).</p>
+
+      <p>In order to implement this, I added some new member variables to the BezierPatch class:<p>
+      <ul>
+        <li>m, which represented the 4x4 matrix that is used as a basis in the matrix representation for Bezier patch evauation.</li>
+        <li>xMatrix, which is a pre-computed 4x4 matrix based off of m, m's transpose, and the 16 control points. It is later then accessed and used to compute the x-coordinate of a 3D point with some parameter coordinates (u, v) on the Bezier patch.</li>
+        <li>yMatrix, which is similar to xMatrix above, but used to compute the y-coordinate instead.</li>
+        <li>zMatrix, which is similar to xMatrix and yMatrix above, but used to compute the z-coordinate instead.</li>
+      </ul>
+
+      <p>The above four member variables are pre-computed within BezierPatch::preprocess() and then used in BezierPatch::evaluate() to obtain the 3D point in (x, y, z)-space.<p>
+
+      <p>Lastly, we need to actually add the desired triangles into the mesh so that it can be rasterized to the screen. To do so, I implemented BezierPatch::add2mesh(), in which I traversed the 8x8 grid in (u, v)-space to obtain 9x9 = 81 relevant 3D points that constitute the Bezier patch in (x, y, z)-space. I then looped through these points and grabbed each relevant set of 3 at a time and created a triangle out of them, which I then added to the mesh using the provided function BezierPatch::addTriangle().</p>
+
+      <p>The most difficult part of this task was understanding how Bezier patches are created and exactly how they can be interpreted as a 3-dimensional version of Bezier curves. It was also interesting to see how the matrix form of Bezier patch evaluation was programmed. Along the way, I encountered a bothersome bug involving nonmanifold vertices; I was certain that I had passed the points into BezierPatch::addTriangle() in a consistent orientation (I personally chose clockwise), but I still kept getting the nonmanifold vertex error. It turned out that I had originally miscounted and thought that there would be 8x8 = 64 relevant vertices to consider when creating the triangles we needed to add to the mesh, not realizing that on an 8x8 grid that there would be 9 total points in each row and column. After realizing that silly mistake, tessellation of the Bezier surfaces worked perfectly fine.</p>
+
+      <p>Below I have included images of a teapot from 2 different angles that demonstrate that my program correctly tessellates Bezier surfaces.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part1-1.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 1-1: An image of a properly tessellated teapot composed of multiple bezier surfaces</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part1-2.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 1-2: An alternate angle of the same tessellated teapot from Figure 1-1.</figcaption>
+          </tr>
+        </table>
+      </div>
+
+    <h2 align="middle">Part 2: Averaging normals for half-edge meshes</h2>
+      <p>In Part 2, I implemented the computation of averaged normals for vertices in halfedge meshes. This is done in the function Vertex::normal() and is what allows us to perform shading using area-averaged normals on vertices and then interpolating, rather than a simple shading algorithm in which we shade the entire triangle the exact same color using the face's normal.</p>
+
+      <p>In order to do so, I used the halfedge data structure in order to traverse all of the faces that a given vertex was a part of. Starting with the halfedge pointer that the vertex has, I compute an area-weighted normal vector for the face that the halfedge is on by performing a cross-product between two of the vectors that define that face. I take this cross-product and add it to a running sum. Then, I repeat on all other relevant faces by following the halfedge's twin() and next() pointers to get to the next relevant halfedge. I stop when I return to the original halfedge, at which point, I normalize the final accumulated vector, which now represents the area-averaged normal of this particular vertex. This normal vector can then be used to perform better shading.</p>
+
+      <p>Below are 2 different views of a teapot that demonstrate the noticeable improvement of using area-averaged normals on vertices for shading over simple shading using the face normals.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part2-1-face.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 2-1: An image of a teapot using face normals for shading.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part2-1-vertex.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 2-2: The same image of a teapot from Figure 2-1, but instead using area-averaged normals.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part2-2-face.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 2-3: Another angle on the same teapot, again using face normals for shading.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part2-2-vertex.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 2-4: The same angle and image of the teapot from Figure 2-3, but instead using area-averaged normals.</figcaption>
+          </tr>
+        </table>
+      </div>
+
+      <p>Looking back, this part did not prove particularly difficult, but did help ease me into working with the halfedge data structure, which helped a lot when it came to implementing the next few parts of this assignment.</p>
+
+    <h2 align="middle">Part 3: Edge flip</h2>
+      <p>In Part 3, I implemented the edge flipping feature in halfedge meshes by implementing HalfedgeMesh::flipEdge(), which takes in an edge object and then flips it, as illustrated below (image provided by CS184 Spring 2016 staff):</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part3-flip-example.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 3-1: An illustration of an edge flip in a halfedge mesh.</figcaption>
+          </tr>
+        </table>
+      </div>
+
+      <p>Edge flipping involves a lot of pointer manipulation, but no additions nor deletions of existing mesh elements. Therefore, in implementing this, I was only concerned with maintaining pointers and properly reassigning the necessary ones. To be safe, I made sure to reassign all pointers from every relevant mesh element that was even remotely touching the edge being flipped, even if they did not seem to be affected or changed by the flip.</p>
+
+      <p>To do so, I retrieved and stored references to all relevant halfedges (6 in total), faces (2), and vertices (4). To help visualize the flip and implementation, I drew up a diagram on a personal whiteboard to illustrate which elements were moving around and what each element's member functions should be changed to point to after the flip. Careful reassignment and usige of the provided function Halfedge::setNeighbors() made this process go fairly smoothly, as I managed to get a working edge flip function on the first attempt!</p>
+
+      <p>Below are images that demonstrate the proper behavior of edge flips ("before" and "after" images) in the teapot mesh.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part3-1.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 3-2: The teapot mesh before any edge flips are made. The edge about to be flipped is selected and highlighted in white.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part3-2.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 3-3: The teapot mesh after the edge flip is done on the highlighted edge.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part3-3.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 3-4: The teapot mesh after a more complicated series of edge flip operations.</figcaption>
+          </tr>
+        </table>
+      </div>
+
+    <h2 align="middle">Part 4: Edge split</h2>
+      <p>In Part 4, I implemented the edge splitting feature in halfedge meshes by implementing the function HalfedgeMesh::splitEdge(), which takes in an edge object, splits it, and returns the newly produced vertex in the center of the split. The process of an edge split is illustrated below (image provided by CS184 Spring 2016 staff):</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part4-split-example.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-1: An illustration of an edge split in a halfedge mesh.</figcaption>
+          </tr>
+        </table>
+      </div>
+
+      <p>Edge splitting is even more complicated than edge flipping, since it also introduces the addition of multiple new mesh elments in addition to complicated pointer manipulation. However, much like in implementing edge flip, I made sure to draw out the process and write out what pointers should be reassigned and what elements should be added on my personal whiteboard before attempting a code implementation. Just as before, to be safe, I reassigned <em>everything</em>, even if it didn't seem like the pointers for the old mesh elements should be changed. Of course, I made sure to assign the member function pointers for any new mesh elements that I added.</p>
+
+      <p>For an edge split, I noted that there would be 12 relevant halfedges to be concerned with (6 of which are new), 5 vertices (1 new), 4 faces (2 new), 4 edges (3 new). For all of these, I retrieved and stored them into local variables and then proceeded to reassign pointers, based on my illustration. Thanks to careful illustration and usage of Halfedge::setNeighbors(), I was able, to my great surprise and delight (I admit I got up and did a little dance to celebrate), to also get edge splitting to work properly on the first try.</p>
+
+      <p>Below are images that demonstrate the proper behavior of edge splits ("before" and "after" images) in the teapot mesh.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part4-1.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-2: The teapot mesh before any edge splits are made. The edge about to be split is selected and highlighted in white.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part4-2.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-3: The teapot mesh after the edge split is done on the highlighted edge.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part4-3.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-4: An edge in the teapot mesh is highlighted and will be flipped.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part4-4.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-5: The teapot mesh after the above edge has been flipped.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part4-5.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-6: The teapot mesh just before the edge highlighted towards the bottom right is split.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part4-6.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-7: The teapot mesh after the above highlighted edge is also then split.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part4-7.png" align="middle" width="500px"/>
+            <figcaption align="middle">Figure 4-8: The teapot mesh after a more complicated series of edge flip operations.</figcaption>
+          </tr>
+        </table>
+      </div>
+
+    <h2 align="middle">Part 5: Upsampling via Loop Subdivision</h2>
+      <p>In Part 5, I implemented loop subdivision which essentially achieves "upsampling" for halfedge meshes, which allows low-resolution meshes to be upsampled for improved smoothness and quality for the purposes of display and simulation. Splits are not enough, since the resulting mesh still retains the same shape, despite being composed of more mesh elements. In addition to splitting and flipping, we must also reassign vertex positions in the resulting split and flipped mesh elements. To do so, we perform a type of interpolation to compute vertex positions that result in a "smoother" upsampled mesh.</p>
+
+      <p>In order to perform the upsampling, we break down the process into multiple parts. First, we iterate through all old vertices in the mesh and compute new positions for each of these vertices. This is where the vertices will be positioned <em>after</em> all of the splitting and flipping is done to upsample the mesh. For each of these old vertices, we compute a weighted average of neighboring vertices' positions and its own position, which is then stored away in the Vertex's newPosition member variable for later use. We also take this opportunity to mark each of these vertices as being part of the old mesh, which is helpful later when we need to flip certain edges.</p>
+
+      <p>Next, we iterate through all of the old edges in the mesh and compute the positions of the vertices that would be created when we later split each of these edges. Each edge will spawn a new vertex at its "midpoint" when it is split; for each of these not-yet-created vertices, we compute the new position by performing a similar weighted average of the relevant neighboring vertices and store it away in the Edge's newPosition member variable for later use.</p>
+
+      <p>Then, we iterate through all of the old edges, taking special care in our for loop to avoid visiting and splitting new edges that are added to the list of edges as a result of calls to HalfedgeMesh::splitEdge(). To ensure that we only split old edges and ignore newly added edges, I only perform the split edge operation on edge's whose halfedge's vertex was marked as belonging to the original mesh (from the first part of this algorithm, described above). In order to make this easier to work with, I also made sure to assign the edges, halfedges, and vertex pointers and relationships in HalfedgeMesh::flipEdge() and HalfedgeMesh::splitEdge() according to this convention. For each of the old edges, I split the edge, mark the returned vertex as new, transfer over the edge's newPosition value to the vertex, and then mark the resulting 4 edges from the split as either new or old. The two edges that comprise the original edge are considered "old", while the two edges created are considered "new". This is useful for the next step, in which we have to flip specific edges.</p>
+
+      <p>Next, we iterate through all of the edges in the mesh again, only considering edges marked as "new" this time. For each of these new edges, we flip them <em>if and only if</em> they connect an "old" vertex with a "new" vertex, which we marked from the above steps.</p>
+
+      <p>Lastly, we iterate through all of the vertices in the mesh, both old and new. For every single vertex, we update its position member variable to be that which is stored in the newPosition member variable. We wait until the end to reassign this, so that computations along the way don't accidentally do things like average averages which are averages of averages, and so on. Essentially, we keep the old and new values separate from each other until the end; this way, we are only first concerned with the connectivity of the mesh after upsampling, and then only at the end do we update their positions in 3D space as appropriate.</p>
+
+      <p>Overall, implementation of upsampling was not too bad; in the end, I did not encounter many major bugs besides compilation issues and was pleased to see that upsampling worked correctly after only just a single attempt.</p>
+
+      <p>Having implemented upsampling, I played around with some of the meshes, particularly the torus and the cube. The torus starts off as a very roughly defined ring with many edges in it.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-5-torus-base.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>Here it is again with shading applied using area-averaged normals.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-10-torus-base-shaded.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>However, if we upsample it even just once, we begin to see it turn into a much smoother ring, though we can still definitely notice the rough faces and edges that compose it.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-6-torus-1.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>Upsampling again, we see additional exponential improvement in the shape and smoothness of the ring.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-7-torus-2.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>And again.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-8-torus-3.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>Once more (that makes 4 upsample operations in total), and this time with shading applied using area-averaged normals.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-9-torus-4-shaded.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>After upsampling 4 times and applying some shading using area-averaged normals, we observe a remarkable improvement from the original torus mesh! Now, we perceive what is a very smooth and nicely shaded ring.</p>
+
+      <p>However, things start behaving weirdly when we apply loop subdivision to meshes that have sharp edges and corners, such as is the case with a cube. Below is the starting cube mesh, whose 6 faces are composed of 2 triangles each.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-3-pre.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>If we upsample this cube using loop subdivision, the cube's mesh transforms asymmetrically. We note that the opposite corners in the top right and bottom left seem to be "pointier" and more prominent than the other 2 corners on this face of the cube. We can also observe that the overall shape does not look symmetric, based on the shapes of the mesh elements as well as how it is currently shaded.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-4-post.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>A few upsample operations later, we have a much smoother cube that somewhat resembles an asymmetric and lopsided sphere.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-11-post-2.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>However, it is not too difficult to preprocess the mesh before upsampling so that it upsamples symmetrically and eventually turns into a more sphere-like object. To do so, we can split the edges on each of the 6 faces such that each face is composed of 4 triangles. This produces a more symmetric overall mesh in that each triangle shares its base with an equivalent triangle on a neighboring face and every triangle on a face shares the same center point on the face. Below, we see what the preprocessing should look like before upsampling.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-1-splitted-pre.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>From here, we upsample once and obtain the following symmetric mesh, which we can directly observe to be symmetric in shape and in shading.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-2-splitted-post.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>Further upsampling operations from here then give us a much more symmetric "rounded edges" cube than before, without the preprocessing.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part5-12-splitted-post-2.png" align="middle" width="500px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>In this particular case, the way that the cube mesh starts initially is the cause of the problem: each face has only 2 triangles, so the edges aren't symmetrically distributed on each face. Thus, when we try to split all of the edges in order to upsample and then reassign vertex positions, some of the vertices turn out to have positions that are a little "farther" out and result in pointier corners than expected. This is due to the fact that vertex positions for old vertices are computed by taking a weighted average of other neighboring vertices; however, the neighboring vertices are in extreme locations such as the opposite corner of a neighboring face. In short, some vertices' positions are weighted too much or too little and thus affect the result. However, if we split the edges on the faces to enforce a base starting symmetry before upsampling, the averaging of neighboring vertex positions performs much better in creating smoothed edges and corners.</p>
+
+    <h2 align="middle">Part 6: Fun with Shaders</h2>
+      <p>In Part 6, I implemented Phong shading and environment map reflection shading by performing some vector computations to obtain the desired shading (RGB value) for any given vertex in the mesh.</p>
+
+      <p>To perform Phong shading, I selected a base ambient shading RGB value of (0.1, 0.1, 0.1), which contributes ever so slightly to the total shading. In addition to the base ambient shading, I also computed diffuse shading by taking the dot product between the normal vector of the vertex and the light vector shining on the vertex. This dot product produced a constant by which I then used to scale a color of my choice. For this part of the assignment, I chose the RGB value (102, 34, 0), which is an earthly brown color that reminded me of terracotta or clay. Lastly, I computed specular shading, which produces a shiny effect on the surface of the mesh. To do so, I computed the half angle vector between the light vector and the eye vector and then dotted it with the normal vector to obtain a constant, which I then raised to some power, p. The power, p, determines how "focused" the shining effect should be; for this, I chose p = 32.0, since I felt it produced a nicely focused shining effect that wasn't too scattered and blinding. To color the specular shading, I took the light color I chose above and added a flat 0.5 (127.5 in RGB values) to each of its components in order to get a "brighter" version of that color. The previous constant, raised to the power p, is then used to scale the specular color, which then completes the specular shading component. To complete Phong shading, we add all three components together: ambient, diffuse, and specular.</p>
+
+      <p>Below are images of Phong shading at work on the teapot mesh.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part6-1-phong.png" align="middle" width="500px" style="padding:10px"/>
+          </tr>
+          <tr>
+            <img src="images/proj2/part6-2-phong.png" align="middle" width="500px" style="padding:10px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>In addition to Phong shading, I also implemented environment map reflection shading. To do so, I computed the output reflection vector given an input vector (the eye viewing a specific vertex) and the normal vector of the vertex. Using this output vector, which represents the reflection in the environment map in (x, y, z)-coordinates, I obtained the corresponding spherical coordinates by using the atan function with the appropriate arguments to get phi and theta. After getting phi and theta, I compute (u, v) coordinates and then use those to access the environment map ("texture map") to get the desired texture for the given vertex.</p>
+
+      <p>Below are images of environment map reflection shading at work on the same teapot mesh.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part6-3-env.png" align="middle" width="500px" style="padding:10px"/>
+          </tr>
+          <tr>
+            <img src="images/proj2/part6-4-env.png" align="middle" width="500px" style="padding:10px"/>
+          </tr>
+        </table>
+      </div>
+
+      <p>This part of the assignment was an interesting and fun introduction to using GLSL, and I found that the provided tutorial was particularly helpful in getting me started with implementing Phong shading. Overall, I did not run into any bugs since I was careful to ensure that I was computing the phi, theta, and (u, v) coordinates correctly.</p>
+
+    <h2 align="middle">Part 7: Design your own mesh</h2>
+      <p>In Part 7, I designed my own mesh using Blender and then exported the .blend file into a .dae file that I could then feed into the meshedit program and perform operations such as upsampling and shading, which I implemented in the previous few parts of this assignment.</p>
+
+      <p>For this part of the assignment, I chose to create a humanoid-mesh, but deviated from the standard human recipe of having just a head, two arms, and two legs. Instead, I opted for four arms and also added some shoes on the ends of the legs. An image that I had in my mind as I brought this mesh to life was that of Machamp, a muscular fighting-type Pokemon that had 4 arms, though my mesh fails to do its details any real justice.</p>
+
+      <p>Using Blender was an enjoyable and rewarding learning experience; I quickly got accustomed to moving the camera around using the Shift and Control keys as necessary, and to using S, G, and R to perform scaling, translation, and rotation operations. I also found locking operations to specific axes to be extremely helpful as I created my mesh. I primarily used E to extrude new mesh elements from previously existing elements to grow my mesh from the core. Starting from the initial cube, I subdivided it into 4 smaller cubes and then extruded the head, arms, and legs. To add extra detail, I would extrude very small sections and then scale, translate, and rotate them slightly to achieve things like a neck, head, and shoes. </p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/machamp.png" align="middle" width="300px"/>
+            <figcaption align="middle">Figure 7-1: A Machamp, from the Pokemon franchise, which my mesh-man somewhat vaguely resembles.</figcaption>
+          </tr>
+        </table>
+      </div>
+
+      <p>Below are some images of my mesh-man in various stages of subdivision and states of shading.</p>
+
+      <div align="middle">
+        <table style="width=100%">
+          <tr>
+            <img src="images/proj2/part7-4.png" align="middle" width="500px" style="padding:10px"/>
+            <figcaption align="middle">Figure 7-2: The original mesh, before any subdivision and without any shading.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part7-5.png" align="middle" width="500px" style="padding:10px"/>
+            <figcaption align="middle">Figure 7-3: The mesh after being upsampled once.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part7-6.png" align="middle" width="500px" style="padding:10px"/>
+            <figcaption align="middle">Figure 7-4: The mesh after being upsampled twice.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part7-7.png" align="middle" width="500px" style="padding:10px"/>
+            <figcaption align="middle">Figure 7-5: The mesh after being upsampled twice and using Phong shading from Part 6.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part7-3.png" align="middle" width="500px" style="padding:10px"/>
+            <figcaption align="middle">Figure 7-6: The same mesh and shading as above, but this time from a slightly different angle.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part7-8.png" align="middle" width="500px" style="padding:10px"/>
+            <figcaption align="middle">Figure 7-7: The same mesh as above, but using environment map reflection shading.</figcaption>
+          </tr>
+          <br>
+          <tr>
+            <img src="images/proj2/part7-2.png" align="middle" width="500px" style="padding:10px"/>
+            <figcaption align="middle">Figure 7-8: The same mesh as above using environment map reflection shading, but from a slightly different angle.</figcaption>
+          </tr>
+        </table>
+      </div>
+</div>
+</body>
+</html>
