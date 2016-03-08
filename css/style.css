@@ -39,15 +39,6 @@ a.link:hover, a.link:active {
 	font-size: 125%;
 	font-weight: 400;
 }
-.proficient {
-	color: rgb(76, 175, 80);
-}
-.familiar {
-	color: rgb(255, 235, 59);
-}
-.other {
-	color: rgb(255, 152, 0);
-}
 
 .demo-card-wide.mdl-card {
 	width: 700px;
