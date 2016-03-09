@@ -1,65 +1,42 @@
 ---
 layout: page
 ---
-<!-- Simple header with scrollable tabs. -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  <header class="mdl-layout__header">
+  {% include header.html %}
 
-  	<!-- Tabs -->
-  	<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-  	  <button class="mdl-button mdl-js-button" disabled style="width: 200px; height: 50px; font-size: 150%; padding: 10px; color: #000000; font-weight: 700;">Austin Le</button>
-      <a href="#scroll-tab-1" class="mdl-layout__tab">About</a>
-      <a href="#scroll-tab-2" class="mdl-layout__tab">Projects</a>
-      <a href="#scroll-tab-3" class="mdl-layout__tab">Skills</a>
-      <a href="#scroll-tab-4" class="mdl-layout__tab is-active">CS 61B</a>
-
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-
-      <!-- Navigation -->
-      <nav class="mdl-navigation" style="padding: 10px">
-        <a class="mdl-navigation__link" href="/cs184" target="_blank">
-        	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">CS 184</button>
-        </a>
-      </nav>
-      <nav class="mdl-navigation" style="padding: 10px">
-        <a class="mdl-navigation__link" href="https://www.linkedin.com/in/austinhle" target="_blank">
-        	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">LinkedIn</button>
-        </a>
-      </nav>
-      <nav class="mdl-navigation" style="padding: 10px">
-        <a class="mdl-navigation__link" href="https://github.com/austinhle" target="_blank">
-        	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">GitHub</button>
-        </a>
-      </nav>
-      <nav class="mdl-navigation" style="padding: 10px">
-        <a class="mdl-navigation__link" href="files/Resume-AustinLe.pdf" target="_blank">
-    			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Resume</button>
-    		</a>
-      </nav>
-    </div>
-  </header>
   <main class="mdl-layout__content">
-    <section class="mdl-layout__tab-panel" id="scroll-tab-1">
-      <div class="page-content">
-      	{% include header.html %}
-		    {% include about.html %}
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-2">
-      <div class="page-content">
-      	{% include projects.html %}
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-      <div class="page-content">
-      	{% include skills.html %}
-      </div>
-    </section>
-    <section class="mdl-layout__tab-panel is-active" id="scroll-tab-4">
-      <div class="page-content">
-        {% include 61b-content.html %}
-      </div>
-    </section>
+    <div class="page-content">
+
+      <h3 style="font-weight: 400; font-family: Open Sans;">CS 61B: Data Structures</h3>
+      <p style="font-family: Open Sans;">
+          <h4 style="font-family: Open Sans;">UNIX Tips of Week:</h4>
+          <ul style="font-family: Open Sans;">
+              <li>Discussion 3: Tab auto-completion (no link at the moment)</li>
+              <li>Discussion 4: <a href="https://en.wikipedia.org/wiki/Less_(Unix)" target="_blank" class="link">less</a></li>
+              <li>Discussion 5: No tip this week :(</li>
+              <li>Discussion 6: <a href="https://piazza.com/class/iiklg7j9ggf2vl?cid=2396" target="_blank" class="link">aliases</a></li>
+              <li>Discussion 7: No tip this week :(</li>
+              <li>
+                Discussion 8: !! (Bang Bang)
+                <br>
+                Some relevant links:
+                <ul>
+                  <li><a href="http://craig-russell.co.uk/2011/09/28/bang-bang-command-recall-in-linux.html#.Vt9gHpMrL-Y" target="_blank" class="link"> http://craig-russell.co.uk/2011/09/28/bang-bang-command-recall-in-linux.html#.Vt9gHpMrL-Y</a></li>
+                  <li><a href="ttp://blog.zloether.com/2009/05/unix-bang-and-bang-bang-shortcuts.html" target="_blank" class="link">http://blog.zloether.com/2009/05/unix-bang-and-bang-bang-shortcuts.html</a></li>
+                  <li><a href="http://jaysoo.ca/2009/09/16/unix-history-and-bang-commands/" target="_blank" class="link">http://jaysoo.ca/2009/09/16/unix-history-and-bang-commands/</a></li>
+                </ul>
+              </li>
+
+          </ul>
+          <h4 style="font-family: Open Sans;">Discussion Materials:</h4>
+          <ul style="font-family: Open Sans;">
+              <li>Discussion 4 (Inheritance): <a href="files/cs61b-disc4-inheritance.pdf" target="_blank" class="link">Slides</a></li>
+              <li>Discussion 5 (ADTs): <a href="files/cs61b-disc5-adts.pdf" target="_blank" class="link">Slides</a></li>
+              <li>Discussion 6 (Immutability and Encapsulation): <a href="files/cs61b-disc6-immutability.pdf" target="_blank" class="link">Slides</a></li>
+              <li>Discussion 7 (Analyzing Code): <a href="files/cs61b-disc7-analysis" target="_blank" class="link">Slides</a></li>
+              <li>Discussion 8 (Asymptotics): <a href="files/cs61b-disc8-asymptotics" target="_blank" class="link">Slides</a></li>
+          </ul>
+      </p>
+    </div>
   </main>
 </div>

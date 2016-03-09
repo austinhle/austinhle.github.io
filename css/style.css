@@ -7,8 +7,16 @@
 	margin: auto
 }
 
+.tab {
+	color: #121212;
+	margin: 10px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
 .page {
 	background-color: #424242;
+	font-family: 'Open Sans', 'Roboto', sans-serif;
 }
 
 a.link:link, a.link:visited {
@@ -30,14 +38,18 @@ a.link:hover, a.link:active {
 	font-weight: 700;
 }
 
-.61b {
-  font-size: 125%;
-  font-weight: 300;
-}
-
 .proficient, .familiar, .other {
 	font-size: 125%;
 	font-weight: 400;
+}
+
+.mdl-card__title {
+	color: #121212;
+}
+
+.description.mdl-card__supporting-text {
+	font-size: 16px;
+	color: #222222;
 }
 
 .demo-card-wide.mdl-card {
