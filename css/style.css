@@ -56,9 +56,13 @@ a.link:hover, a.link:active {
 	width: 700px;
 	height: 225px;
 }
-.demo-card-wide.mdl-card-cs184 {
+.demo-card-wide.mdl-card-cs184-proj3 {
 	width: 700px;
-	height: 175px;
+	height: 190px;
+}
+.demo-card-wide.mdl-card-cs184-proj1, .demo-card-wide.mdl-card-cs184-proj2 {
+	width: 700px;
+	height: 225px;
 }
 
 .demo-card-wide > .mdl-card__title {
