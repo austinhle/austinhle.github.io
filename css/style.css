@@ -3,7 +3,7 @@
 	color: #E0E0E0;
 	font-family: 'Maven Pro', 'Open Sans', 'Roboto', sans-serif;
 	padding: 100px;
-	width: 700px;
+	width: 800px;
 	margin: auto
 }
 
@@ -25,6 +25,10 @@ div.cs184 {
 }
 
 div.cs184 > p {
+	font-size: 18px;
+}
+
+ul.list {
 	font-size: 18px;
 }
 
