@@ -94,6 +94,10 @@ a.link:hover, a.link:active {
 	width: 700px;
 	height: 225px;
 }
+.demo-card-wide.mdl-card-cs184-proj4 {
+	width: 700px;
+	height: 210px;
+}
 
 .demo-card-wide > .mdl-card__title {
 	height: 65px;

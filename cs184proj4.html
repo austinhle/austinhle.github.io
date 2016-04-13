@@ -1,0 +1,226 @@
+---
+layout: page
+---
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  {% include header.html %}
+
+  <main class="mdl-layout__content">
+    <div class="cs184">
+
+    <h1 class="cs184" align="middle">CS 184: Computer Graphics and Imaging</h1>
+      <h1 class="cs184" align="middle">Assignment 4: Lens Simulator</h1>
+
+    <br><br>
+
+    <h2 class="cs184"class="cs184" align="middle">Overview</h2>
+      <p>In this assignment, I augment the previous pathtracer by simulating a real camera lens system. Rays are traced through a series of lens before going into the scene and back. Afterwards, I implement a basic metric for determing how focused an image is and then build upon that to create an autofocusing algorithm that brings the image into focus by moving the camera to the appropriate sensor depth.</p>
+
+      <p>Not all images were included, since rendering became a big bottleneck on the school machines.</p>
+
+    <h2 class="cs184"align="middle">Part 1: Tracing Rays through Lenses</h2>
+
+    <p>In Part 1, I implemented core tracing functions for lens simulation. Unlike a pinhole camera, a fully simulated lens system is able to produce realistic effects such as defocus blur from objects that are too close or too far, as well as provide perspective effects. A fully simulate lens system generates and traces rays through a series of lenses, thus simulating the realistic refraction and reflection of light through a camera lens when capturing a real image. With a fully simulated lens system, we cannot have the entire image in focus simultaneously (assuming there is some depth to the 3-dimensional scene). There is a sense of depth of field as well as depth of view, which mimics a realistic camera image. On the other hand, a pinhole camera simply traces rays directly through the pinhole and into the scene, without any intermediate mediums.</p>
+
+    <p>For a realistic camera simulation, we have a LensCamera, which is composed of one or more Lens, which is composed of LensElements. To correctly trace rays through each LensElement in the camera, we treat each LensElement as a "slice" of a sphere with which we intersect and then refract/reflect our rays. In order to do this, I implemented the LensElement::pass_through, LensElement::intersect, and LensElement::refract functions. Refraction through a lens is done by applying Snell's Law with careful attention to the keeping the directions of rays consistent as well properly flipping the ratio of the indices of refractions when appropriate. Overall, these functions were not too difficult to complete since I had already had to deal with a lot of the tricky math and logic involved from when I implemented refractive and reflective BSDFs from Assignment 3.</p>
+
+    <p>With the logic completed for handling rays passing through LensElements, I next implemented Lens::trace() and Lens::trace_backwards(), which trace rays forwards and backwards, respectively, through a lens's LensElements. Tracing forwards means going from the camera into the world; tracing backwards is the opposite. Forward tracing was a fairly straightforward traversal through the list of LensElements and passing the ray through each of them sequentially. Backwards tracing, however, was slightly tricky, and I encountered some bugs in which my rays seemed to behave correctly at first glance, but failed to converge at a conjugate point on the other side of the lens. It turns out that this was due to incorrect handling of the index of refraction at the last lens in the list, at which point the ray should refract back into a vacuum (index of refraction 1). With that fixed and all of the above functions working, I was able to run the LensTester program to verify the behavior of my rays. Below are some screenshots of rays passing through four different kinds of lenses and converging at a conjugate point on the opposite side. In all four, the ray bundles originate from the right hand side.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/part1-lens1.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-1: LensTester program passing rays through D-GAUSS F/2 22deg HFOV lens.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/part1-lens2.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-2: LensTester program passing rays through Wide-angle (38-degree) Nakamura lens.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/part1-lens3.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-3: LensTester program passing rays through SIGLER Super achromate telephoto, EFL=254mm, F/5.6" lens.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/part1-lens4.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-4: LensTester program passing rays through Muller 16mm/f4 155.9FOV fisheye lens.</figcaption>
+        </tr>
+      </table>
+    </div>
+
+    <p>Next, I implemented some helper functions for the Lens and LensCamera classes. The first of these helper functions is Lens::set_focus_params, which computes some useful values like infinity focus, near focus, and focal length for the given lens. To compute the infinity focus, I create a ray that starts at "infinity" (or just really far away on the z-axis) and trace it backwards through the lens to see it hits the optical axis. This hit point determines the infinity focus point on the optical axis. To compute the near focus point, I chose a point on the front side of the lens about 5 * focal_length away and aimed it slightly upwards through the lens. Then, I trace this ray and compute its conjugate point on the other side of the lens, which represents the corresponding near focus depth. Lastly, the focal length is defined to be the distance on the optical axis between the infinity focus point and the point of intersection with the principal plane from the thick-lens approximation. To compute this, I trace the part of the infinity ray that comes out of the back lens and intersects the optical axis all the way back up to the plane of the original infinity ray. This intersection point defines the intersection with the principal plane. Then, the focal length is simply the distance between the z-components of that point and the infinity focus point.</p>
+
+    <div align="middle">
+      <table style="width=100%" border="1px" cellpadding="10px">
+        <tr>
+          <td></td>
+          <td>Focal length</td>
+          <td>Infinity focus sensor depth</td>
+          <td>Close focus distance in front of lens</td>
+          <td>Close focus sensor depth</td>
+        </tr>
+        <tr>
+          <td>D-GAUSS F/2 22deg HFO</td>
+          <td>50.3582 mm</td>
+          <td>51.2609 mm</td>
+          <td>-264.604914 mm</td>
+          <td>62.7567 mm</td>
+        </tr>
+        <tr>
+          <td>Wide-angle (38-degree) Nakamura</td>
+          <td>22.0235 mm</td>
+          <td>28.7635 mm</td>
+          <td>-109.048482 mm</td>
+          <td>34.5797 mm</td>
+        </tr>
+        <tr>
+          <td>SIGLER Super achromate telephoto, EFL=254mm, F/5.6"</td>
+          <td>249.567 mm</td>
+          <td>188.758 mm</td>
+          <td>-1646.198382 mm</td>
+          <td>236.875 mm</td>
+        </tr>
+        <tr>
+          <td>Muller 16mm/f4 155.9FOV fisheye</td>
+          <td>9.9914 mm</td>
+          <td>28.7443 mm</td>
+          <td>-60.851142 mm</td>
+          <td>31.1819 mm</td>
+        </tr>
+        <br>
+      </table>
+    </div>
+
+    <br><br>
+
+    <p>In addition, I also Lens::focus_depth, which computes the conjugate point on the other side of the lens for some given starting position of a sensor plane. This generates a ray from the sensor pixel at the given position, angles it up slightly towards the lens, and traces it to find the conjugate point. In this sense, it is very similar to how we computed the near focus depth from above. Using this function, we can observe the inverse relationship between sensor depth to conjugate point by plotting these two values against each other over 100 evenly spaced sensor depths ranging from the near focus depth to the infinity focus depth. Below, all units are in millimeters.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/lens1-c-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-5: A plot of conjugate point vs. sensor depth for lens 1.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/lens2-c-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-6: A plot of conjugate point vs. sensor depth for lens 2.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/lens3-c-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-7: A plot of conjugate point vs. sensor depth for lens 3.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/lens4-c-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-8: A plot of conjugate point vs. sensor depth for lens 4.</figcaption>
+        </tr>
+        <br>
+      </table>
+    </div>
+
+    <p>Furthermore, I implemented Lens::back_lens_sample, which generates a uniform random sample from a 2D circle on the back side of a lens. To generate the sample within a circle, I used rejection sampling from the square in which the 2D circle is inscribed (which has radius equal to the lens's aperture).</p>
+
+    <p>Lastly, I implemented LensCamera::generate_ray, which generates a random ray from the camera into the back lens. However, sometimes the ray will miss the lens entirely, even though we choose a sample from back lens. To take care of this, I augmented the ray generation to repeatedly sample and try rays up to a maximum of 20 times before giving up. Then, when we raytrace a pixel, we divide the resulting ray by the number of tries rather than the number of sample rays we took. The overall effect is that we have a more correct vignetting and reduced noise. In this process, I also compute the fourth power of the cosine term that we see in the derivation for ray tracing through real lens. I pass this factor around in order to correctly scale the returned value from trace_ray; in the scenario that we try 20 times and still can't get a ray to pass through the lens, this cosine factor is instead set to 0, which effectively makes the ray black.</p>
+
+    <p>Below is a manually focused scene rendered at 1024 samples per pixel, 1 sample per area light, and maximum ray bounce of 100. The rendered image highlights the effects of a real lens (defocus blur in some parts of the image) and some perspective effects caused by the angle at which the dragon is viewed within the Cornell box.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/CBdragon.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 1-9: A rendered Cornell box containing a dragon, highlighting some defocus blur from a real lens.</figcaption>
+        </tr>
+        <br>
+      </table>
+    </div>
+
+    <h2 class="cs184"align="middle">Part 2: Contrast-based Autofocus</h2>
+
+    <p>Now that lens simulation is properly running, we can worry about implementing an autofocus mechanism. Up until now, we had to manually focus images by moving the sensor plane until images became less blurry. Finding an optimal point is difficult via a manual search, so instead, we can come up with a heuristic for how focused an image is based on the amount of contrast in the image. To do so, I implemented LensCamera::focus_metric, which takes in an image buffer and computes an estimate for how focused the image is. The higher the metric, the more focused we believe the image to be.</p>
+
+    <p>I used a fairly simple focus metric based on the amount of variance in the image. To do so, I computed the variance over all of the pixels in the image buffer in all three color channels: red, green, and blue. Then, I computed my metric to simply be the average of these three variances, which worked fairly well. This metric is a fairly decent contrast-based metric, since the more variance there is in the color channels, the more "change" there is in the image. Blurry images tend to have less "change", which is what makes them have low contrast and poor edges. On the other hand, images that are in focus have more "change", since there are sharper and more well-defined edges and thus, better overall contrast. Following that train of thought, this implies greater overall variance in the pixel's color channels.</p>
+
+    <p>Armed with a basic metric for estimating how focused an image is, we can now implement an autofocusing algorithm. We start with the sensor plane placed at the infinity focus point and slowly move it further back to the near focus point. Our step size is determined by how quickly a pixel can go from blurred to focus; in other words, we want our step size to be such that the circle of confusion is at most 1 pixel wide. Further, if we assume that the lens is a f/2 lens, then we can compute that our tolerance for sensor plane movement ( such that we maintain at most a 1 pixel circle of confusion) to be twice the size of the circle of confusion in millimeters. This tolerance is then our step size. With this as our step size, we perform a simple linear search, moving our sensor plane ever so slightly by the small step size. At each candidate sensor depth, we compute the focus metric and keep a running best. After we reach the near focus depth, we are finished and know what the best depth and corresponding focus metric values are. Finally, we set the lens's sensor depth to be the best depth and then re-render the image.</p>
+
+    <p>Using this autofocus heuristic, we can examine the relationship between sensor depth and focus metric. At each sensor depth tested, we can record the depth and corresponding metric and then produce a plot of metric vs. depth. Below are the plots for each of the four lenses, rendered at a high quality (16 samples per pixel, 16 samples per area light, and maximum ray bounce of 100). We expect to find a global maximum in each plot, which corresponds to the sensor depth at which the image is most focused.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/lens1-f-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-1: A plot of focus metric vs. sensor depth for lens 1.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/lens2-f-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-2: A plot of focus metric vs. sensor depth for lens 2.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/lens3-f-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-3: A plot of focus metric vs. sensor depth for lens 3.</figcaption>
+        </tr>
+        <br>
+        <tr>
+          <img src="images/proj4/lens4-f-to-s.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-4: A plot of focus metric vs. sensor depth for lens 4.</figcaption>
+        </tr>
+        <br>
+      </table>
+    </div>
+
+    <p>Lastly, to showcase the completed lens simulation system, I chose the same Cornbell box with a dragon in it and rendered it in high quality to highlight the differences between the four different lenses.</p>
+
+    <p>For the first, normal lens, we see that it is most focused at the area I used to perform the autofocus on. Things in the background are generally more blurry.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/CBdragon-part2-lens1.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-5: D-GAUSS F/2 22deg HFO</figcaption>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <p>For the second, wide-angle lens, the walls are more noticeable and appear to be stretched out more, showcasing the angle at which the camera is able to capture images. It appears as if we are inside the box, with the way the walls are perceived.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/CBdragon-part2-lens2.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-6: Wide-angle (38-degree) Nakamura</figcaption>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <p>For the third, telescopic lens, the camera is able to capture this image from a very far distance away. As a result, we can see that the walls appear to be much smaller and compressed together. This has the opposite effect of the wide-angle lens above.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/CBdragon-part2-lens3.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-7: SIGLER Super achromate telephoto, EFL=254mm, F/5.6"</figcaption>
+        </tr>
+      </table>
+    </div>
+
+    <br>
+    <p>For the fourth, fisheye lens, we can easily see the rounding and spherical effects.</p>
+
+    <div align="middle">
+      <table style="width=100%">
+        <tr>
+          <img src="images/proj4/CBdragon-part2-lens4-2.png" align="middle" width="480px"/>
+          <figcaption align="middle">Figure 2-8: Muller 16mm/f4 155.9FOV fisheye</figcaption>
+        </tr>
+      </table>
+    </div>
+
+    </div>
+  </main>
+</div>
