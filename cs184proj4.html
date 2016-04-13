@@ -15,8 +15,6 @@ layout: page
     <h2 class="cs184"class="cs184" align="middle">Overview</h2>
       <p>In this assignment, I augment the previous pathtracer by simulating a real camera lens system. Rays are traced through a series of lens before going into the scene and back. Afterwards, I implement a basic metric for determing how focused an image is and then build upon that to create an autofocusing algorithm that brings the image into focus by moving the camera to the appropriate sensor depth.</p>
 
-      <p>Not all images were included, since rendering became a big bottleneck on the school machines.</p>
-
     <h2 class="cs184"align="middle">Part 1: Tracing Rays through Lenses</h2>
 
     <p>In Part 1, I implemented core tracing functions for lens simulation. Unlike a pinhole camera, a fully simulated lens system is able to produce realistic effects such as defocus blur from objects that are too close or too far, as well as provide perspective effects. A fully simulate lens system generates and traces rays through a series of lenses, thus simulating the realistic refraction and reflection of light through a camera lens when capturing a real image. With a fully simulated lens system, we cannot have the entire image in focus simultaneously (assuming there is some depth to the 3-dimensional scene). There is a sense of depth of field as well as depth of view, which mimics a realistic camera image. On the other hand, a pinhole camera simply traces rays directly through the pinhole and into the scene, without any intermediate mediums.</p>
