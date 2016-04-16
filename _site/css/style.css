@@ -7,11 +7,16 @@
 	margin: auto
 }
 
-.tab {
-	color: #212121;
+.mdl-button.mdl-js-button.mdl-js-ripple-effect.tab {
+	color: #E0E0E0;
 	margin: 10px;
 	margin-left: 20px;
 	margin-right: 20px;
+	font-family: 'Quicksand', 'Open Sans', sans-serif;
+}
+
+.mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent.button-link {
+	font-family: 'Quicksand', 'Open Sans', sans-serif;
 }
 
 div.cs184 {
@@ -44,6 +49,18 @@ h3.cs184 {
 	font-size: 24px;
 }
 
+h1.cs184, h2.cs184, h3.cs184, h4.cs184 {
+	font-family: 'Maven Pro', 'Open Sans', 'Roboto', sans-serif;
+}
+
+h1.title {
+	font-family: 'Quicksand', 'Open Sans', sans-serif;
+}
+
+h3.title {
+	font-family: 'Maven Pro', 'Open Sans', sans-serif;
+}
+
 .page {
 	background-color: #FDFDFD;
 	font-family: 'Maven Pro', 'Open Sans', 'Roboto', sans-serif;
@@ -64,22 +81,25 @@ a.link:hover, a.link:active {
 	font-weight: 300;
 }
 
-.project {
+.demo-card-wide.project {
 	font-weight: 700;
+	background: #3949AB;
+	margin: auto;
 }
 
-.proficient, .familiar, .other {
-	font-size: 125%;
-	font-weight: 400;
+.mdl-button.mdl-button--colored.mdl-js-button.mdl-js-ripple-effect {
+	color: #E0E0E0;
 }
 
-.mdl-card__title {
-	color: #121212;
+.description.mdl-card__title-text {
+	color: #E0E0E0;
+	font-family: 'Quicksand', 'Open Sans', sans-serif;
 }
 
 .description.mdl-card__supporting-text {
 	font-size: 16px;
-	color: #222222;
+	color: #E0E0E0;
+	font-weight: 500;
 }
 
 .demo-card-wide.mdl-card {
@@ -108,7 +128,4 @@ a.link:hover, a.link:active {
 }
 .demo-card-wide > .mdl-card__actions {
 	height: 30px;
-}
-.mdl-card__supporting-text {
-	font-weight: 500;
 }
