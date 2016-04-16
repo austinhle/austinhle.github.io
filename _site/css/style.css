@@ -1,6 +1,6 @@
 .page-content {
 	text-align: left;
-	color: #E0E0E0;
+	color: #212121;
 	font-family: 'Maven Pro', 'Open Sans', 'Roboto', sans-serif;
 	padding: 100px;
 	width: 800px;
@@ -8,14 +8,14 @@
 }
 
 .tab {
-	color: #121212;
+	color: #212121;
 	margin: 10px;
 	margin-left: 20px;
 	margin-right: 20px;
 }
 
 div.cs184 {
-	color: #E0E0E0;
+	color: #212121;
 	font-family: 'Maven Pro', 'Open Sans', 'Roboto', sans-serif;
 	padding: 100px;
 	width: 1000px;
@@ -45,17 +45,17 @@ h3.cs184 {
 }
 
 .page {
-	background-color: #424242;
+	background-color: #FDFDFD;
 	font-family: 'Maven Pro', 'Open Sans', 'Roboto', sans-serif;
 }
 
 a.link:link, a.link:visited {
-	color: #FFD119;
+	color: #283593;
 	text-decoration: none;
 }
 
 a.link:hover, a.link:active {
-	color: #FFD119;
+	color: #283593;
 	text-decoration: underline;
 }
 
@@ -89,6 +89,10 @@ a.link:hover, a.link:active {
 .demo-card-wide.mdl-card-cs184-proj3 {
 	width: 700px;
 	height: 190px;
+}
+.demo-card-wide.mdl-card-cs184-final-proj {
+	width: 700px;
+	height: 210px;
 }
 .demo-card-wide.mdl-card-cs184-proj1, .demo-card-wide.mdl-card-cs184-proj2 {
 	width: 700px;
