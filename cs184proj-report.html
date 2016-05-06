@@ -51,8 +51,8 @@ layout: page
     <p>The splatting effect is itself just another fragment shader; to “inject” ink into the existing fluid, we apply the splat shader program to the density and velocity fields in the simulation.</p>
     <p>To make the interactive splatting more aesthetically appealing and fun to play with, we also implemented smooth color cycling over time using offset sine waves.</p>
 
-    <h3 class="cs184">Problems</h3>
-    <h4 class="cs184">Boundary Conditions</h4>
+    <h2 class="cs184">Problems</h2>
+    <h3 class="cs184">Boundary Conditions</h3>
     <p>At the boundaries of the box, fluids should demonstrate two properties: no-slip (zero velocity) and pure Neumann (rate of change of normal pressure vector is zero).</p>
     <p>To enforce these properties, we added a boundary condition shader to the simulation pipeline. If a fragment is at the boundary, its velocity field is set to 0 and its pressure vector is set to be equal to that of an adjacent fragment (which makes the rate of change zero).</p>
     <p>Before implementing any boundary checks, interacting with the edges of the box produced not only a splat there, but also caused the entire box to behave abnormally and rapidly overflow with the splat.</p>
