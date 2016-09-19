@@ -1,7 +1,7 @@
 .page-content {
 	text-align: left;
 	color: #212121;
-	font-family: 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Droid Sans', sans-serif;
 	padding: 100px;
 	width: 800px;
 	margin: auto
@@ -12,16 +12,16 @@
 	margin: 10px;
 	margin-left: 20px;
 	margin-right: 20px;
-	font-family: 'Oswald', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Oswald', 'Droid Sans', sans-serif;
 }
 
 .mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent.button-link {
-	font-family: 'Oswald', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Oswald', 'Droid Sans', sans-serif;
 }
 
 div.cs184 {
 	color: #212121;
-	font-family: 'Nunito', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Nunito', 'Droid Sans', sans-serif;
 	padding: 100px;
 	width: 1000px;
 	font-weight: 400;
@@ -50,20 +50,20 @@ h3.cs184 {
 }
 
 h1.cs184, h2.cs184, h3.cs184, h4.cs184 {
-	font-family: 'Oswald', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Oswald', 'Droid Sans', sans-serif;
 }
 
 h1.title {
-	font-family: 'Oswald', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Oswald', 'Droid Sans', sans-serif;
 }
 
 h3.title {
-	font-family: 'Oswald', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Oswald', 'Droid Sans', sans-serif;
 }
 
 .page {
 	background-color: #FDFDFD;
-	font-family: 'Nunito', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Droid Sans', sans-serif;
 }
 
 a.link:link, a.link:visited {
@@ -93,7 +93,7 @@ a.link:hover, a.link:active {
 
 .description.mdl-card__title-text {
 	color: #E0E0E0;
-	font-family: 'Oswald', 'Open Sans', 'Droid Sans', sans-serif;
+	font-family: 'Oswald', 'Droid Sans', sans-serif;
 }
 
 .description.mdl-card__supporting-text {
