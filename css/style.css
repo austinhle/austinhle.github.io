@@ -107,26 +107,14 @@ a.link:hover, a.link:active {
 	width: 700px;
 	height: 225px;
 }
-.demo-card-wide.mdl-card-cs-proj3 {
-	width: 700px;
-	height: 190px;
-}
 .demo-card-wide.mdl-card-cs-final-proj {
 	width: 700px;
-	height: 210px;
-}
-.demo-card-wide.mdl-card-cs-proj1, .demo-card-wide.mdl-card-cs-proj2 {
-	width: 700px;
-	height: 225px;
-}
-.demo-card-wide.mdl-card-cs-proj4 {
-	width: 700px;
-	height: 210px;
+	height: 250px;
 }
 
 .demo-card-wide > .mdl-card__title {
 	height: 65px;
 }
 .demo-card-wide > .mdl-card__actions {
-	height: 30px;
+	height: 50px;
 }
