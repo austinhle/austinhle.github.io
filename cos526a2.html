@@ -63,19 +63,11 @@ layout: page
       a Point in homogenous coordinates so that an affine transformation can
       be performed by a simple matrix-vector multiplication.</li>
     <li><tt>Vector6D</tt> (<code>vector6D.h, vector6D.cpp</code>):
-      A 46dimensional vector supporting simple operations, including addition,
+      A 6-dimensional vector supporting simple operations, including addition,
       subtraction, multiplication, division, and dot product. It is used only
       alongside <tt>Matrix6x6</tt> for formulating and solving a 6x6 linear
       system of equations in the ICP algorithm.</li>
   </ul>
-
-  <p><b>Side note:</b> The implementations of the matrix and vector libraries
-  were inspired by a similar assignment that I previously did in my undergraduate
-  computer graphics course and then later improved upon when I TA'd for the class.
-  I realized shortly after that I had already implemented a good portion
-  of the libraries that I could probably have just used the (most certainly better)
-  matrix and vector libraries included in the GNU Scientific Library, rather than
-  using GSL only for the linear solver.</p>
 
   <h3 class="cs">The Iterative Closest Points Program</h3>
 
@@ -130,10 +122,10 @@ layout: page
     of a bunny! Here are a few different angles of the final result.</p>
 
   <center>
-    <img src="images/0.png" width="300px"></img>
-    <img src="images/1.png" width="300px"></img>
-    <img src="images/2.png" width="300px"></img>
-    <img src="images/3.png" width="300px"></img>
+    <img src="cos526-img/0.png" width="300px"></img>
+    <img src="cos526-img/1.png" width="300px"></img>
+    <img src="cos526-img/2.png" width="300px"></img>
+    <img src="cos526-img/3.png" width="300px"></img>
   </center>
 
   <br><hr>
