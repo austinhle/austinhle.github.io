@@ -20,7 +20,7 @@
 	font-family: 'Oswald', 'Lato', sans-serif;
 }
 
-div.cs184 {
+div.cs {
 	color: #212121;
 	font-family: 'Lato', sans-serif;
 	padding: 100px;
@@ -30,7 +30,7 @@ div.cs184 {
 	margin: auto;
 }
 
-div.cs184 > p {
+div.cs > p {
 	font-size: 18px;
 }
 
@@ -38,19 +38,19 @@ ul.list {
 	font-size: 18px;
 }
 
-h1.cs184 {
+h1.cs {
 	font-size: 72px;
 }
 
-h2.cs184 {
+h2.cs {
 	font-size: 36px;
 }
 
-h3.cs184 {
+h3.cs {
 	font-size: 24px;
 }
 
-h1.cs184, h2.cs184, h3.cs184, h4.cs184 {
+h1.cs, h2.cs, h3.cs, h4.cs {
 	font-family: 'Oswald', 'Lato', sans-serif;
 }
 
@@ -107,19 +107,19 @@ a.link:hover, a.link:active {
 	width: 700px;
 	height: 225px;
 }
-.demo-card-wide.mdl-card-cs184-proj3 {
+.demo-card-wide.mdl-card-cs-proj3 {
 	width: 700px;
 	height: 190px;
 }
-.demo-card-wide.mdl-card-cs184-final-proj {
+.demo-card-wide.mdl-card-cs-final-proj {
 	width: 700px;
 	height: 210px;
 }
-.demo-card-wide.mdl-card-cs184-proj1, .demo-card-wide.mdl-card-cs184-proj2 {
+.demo-card-wide.mdl-card-cs-proj1, .demo-card-wide.mdl-card-cs-proj2 {
 	width: 700px;
 	height: 225px;
 }
-.demo-card-wide.mdl-card-cs184-proj4 {
+.demo-card-wide.mdl-card-cs-proj4 {
 	width: 700px;
 	height: 210px;
 }
